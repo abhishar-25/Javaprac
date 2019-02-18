@@ -1,10 +1,24 @@
-	class Tollbooth {
-    Tollbooth() 
+interface Toll
+{
+	public void display();
+	public void calToll(Truck T);
+}
+	class Tollbooth implements Toll {
+    int initialreceipts;
+    int initialtruckcount;
+	Tollbooth() 
 	{
         initialtruckcount = 0;
         initialreceipts = 0;
     }
-    void calToll(Truck T) 
+    public void display() 
+	{
+        System.out.print("Total amount on Receipts: ");
+        System.out.println(initialreceipts);
+        System.out.print(" Trucks: ");
+        System.out.println(initialtruckcount);
+    }
+	public void calToll(Truck T) 
 	{
         int axles = T.getAxles();
         int Weight = T.getWeight();
@@ -18,52 +32,40 @@
         initialtruckcount = initialtruckcount + 1;
         initialreceipts = initialreceipts + tollDue;
     }
-    void Rcollect() 
-	{
-        System.out.print("Total amount of receipts");
-        display();
-        initialtruckcount = 0;
-        initialreceipts = 0;
     }
-    void display() 
-	{
-        System.out.print("Total amount of Receipts: ");
-        System.out.println(initialreceipts);
-        System.out.print(" Trucks: ");
-        System.out.println(initialtruckcount);
-    }
-    int initialreceipts;
-    int initialtruckcount;
-	}
-class Truck {
-    Truck(int axles, int Weight) 
+interface Truck
+{
+	public int getAxles();
+	public int getWeight();
+}
+class Trucks extends Tollbooth implements Truck {
+    int axles;
+    int Weight;
+    Trucks(int axles, int Weight) 
 	{
         this.axles = axles;
         this.Weight = Weight;
     }
-    int getAxles() 
+    public int getAxles() 
 	{
 		return axles;
 	}
-    int getWeight() 
+    public int getWeight() 
 	{
 		return Weight;
 	}
-    int axles;
-    int Weight;
 }
 class TestToll {
     public static void main(String [] args) 
 	{
-        Tollbooth t = new Tollbooth();
-		
-        Truck t1 = new Truck(7, 66000);
-        Truck t2 = new Truck(3, 2250);
-        Truck t3 = new Truck(6, 21000);
+        Tollbooth t = new Tollbooth();		
+        Trucks t1 = new Trucks(7, 66000);
+        Trucks t2 = new Trucks(3, 2250);
+        Trucks t3 = new Trucks(6, 21000);
         t.calToll(t1);
         t.display();
         t.calToll(t2);
-        t.Rcollect();
+        t.display();
         t.calToll(t3);
         t.display();
     }
